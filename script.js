@@ -1,22 +1,22 @@
-function Gameboard() {
-    const gameboard = [];
+function GameBoard() {
+    const row = 3;
+    const column = 3;
+    const board = [];
 
     for (let i = 0; i < 3; i++) {
-        const row = [];
-        for (let i = 0; i < 3; i++) {
-            row.push("");
+        board[i] = [];
+        for (let j = 0; j < 3; j++) {
+            board[i].push(j);
         };
-        gameboard.push(row);
     };
-
-    return gameboard;
+    return board;
 }
 
-console.log(Gameboard())
+console.log(GameBoard());
 
 
 /* 
-- Store players as Objects
+-Create players objects/factory
 - object to control the flow
 - display controller
  */
