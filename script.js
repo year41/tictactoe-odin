@@ -15,7 +15,13 @@ function GameBoard() {
 function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
     const board = GameBoard();
 
-    const players = [{ name: playerOne, mark: "X" }, { name: playerTwo, mark: "O" } ]
+    const players = [{ name: playerOne, mark: "X" }, { name: playerTwo, mark: "O" } ];
+
+    let activePLayer = players[0];
+
+    const switchPlayer = () => activePLayer === players[0] ? players[1] : players[0];
+
+    // board[1][1] = activePLayer.mark;
 
     return { board, players };
 }
