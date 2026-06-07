@@ -16,9 +16,6 @@ function GameBoard() {
         if (!cellAvailable) return console.log("Cell is filled, please choose a different cell...");
 
         board[row][column] = playerMark;
-        
-        console.log("mark", cellAvailable)
-
     }
 
     const printBoard = () => {
