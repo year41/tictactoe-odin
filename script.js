@@ -10,13 +10,23 @@ function GameBoard() {
         };
     };
 
+    const markBoard = (row, column, playerMark) => {
+        const cellAvailable = board[row][column] === "X" || board[row][column] === "O" ? false : true;
+        
+        if (!cellAvailable) return console.log("Cell is filled, please choose a different cell...");
+
+        board[row][column] = playerMark;
+        
+        console.log("mark", cellAvailable)
+
+    }
+
     const printBoard = () => {
         const boardWithValues = board.map((row) => row.map((col) => col));
         console.log("board", boardWithValues);
     };
 
-
-    return { printBoard };
+    return { printBoard, markBoard };
 };
 
 function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
@@ -27,9 +37,9 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
     let activePLayer = players[0];
 
     const switchPlayer = () => activePLayer === players[0] ? players[1] : players[0];
-
-    // board[1][1] = activePLayer.mark;
-
+    
+    board.markBoard(1, 1, "X")
+    
     board.printBoard();
 
     return { players };
