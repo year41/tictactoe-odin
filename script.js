@@ -6,16 +6,23 @@ function GameBoard() {
     for (let i = 0; i < 3; i++) {
         board[i] = [];
         for (let j = 0; j < 3; j++) {
-            board[i].push("");
+            board[i].push(j);
         };
     };
-    return board;
+
+    const printBoard = () => {
+        const boardWithValues = board.map((row) => row.map((col) => col));
+        console.log("board", boardWithValues);
+    };
+
+
+    return { printBoard };
 };
 
 function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
     const board = GameBoard();
 
-    const players = [{ name: playerOne, mark: "X" }, { name: playerTwo, mark: "O" } ];
+    const players = [{ name: playerOne, mark: "X" }, { name: playerTwo, mark: "O" }];
 
     let activePLayer = players[0];
 
@@ -23,11 +30,15 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
 
     // board[1][1] = activePLayer.mark;
 
-    return { board, players };
+    board.printBoard();
+
+    return { players };
 }
 
-console.log(GameBoard());
-console.log(GameController());
+// console.log(GameBoard());
+// console.log(GameController());
+
+GameController();
 
 
 
