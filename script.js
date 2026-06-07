@@ -13,13 +13,16 @@ function GameBoard() {
     const markBoard = (row, column, playerMark) => {
         if (board[row][column] === "X" || board[row][column] === "O") {
             return console.log("This cell is already filled, please choose a different cell...");
+            // return ;
         };
 
         if (playerMark !== "X" && playerMark !== "O") {
             return console.log(`"${playerMark}" is not a valid marking. Please input the correct marking, "X" or "O"...`);
+            // return false;
         };
 
         board[row][column] = playerMark;
+        // return true;
     }
 
     const printBoard = () => {
@@ -35,23 +38,35 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
 
     const players = [{ name: playerOne, mark: "X" }, { name: playerTwo, mark: "O" }];
 
-    let activePLayer = players[0];
+    let activePlayer = players[0];
 
-    const switchPlayer = () => activePLayer === players[0] ? players[1] : players[0];
+    const switchPlayer = () => activePlayer = activePlayer === players[0] ? players[1] : players[0];
 
-    board.markBoard(1, 1, "O");
-    board.markBoard(1, 2, "p");
+    const getActivePlayer = () => activePlayer;
 
-    board.printBoard();
+    const printNextRound = () => {
+        board.printBoard();
+        console.log(`${getActivePlayer().name}'s turn.`);
+    };
 
-    return { players };
+    const playRound = (row, column) => {
+        console.log(`${getActivePlayer().name} places ${getActivePlayer().mark} in row ${row}, column ${column} location. `);
+
+        board.markBoard(row, column, getActivePlayer().mark);
+        switchPlayer();
+        printNextRound();
+    };
+
+    printNextRound();
+
+    return { playRound };
 }
 
-// console.log(GameBoard());
-// console.log(GameController());
+const play = GameController();
 
-GameController();
-
+play.playRound(1, 0);
+play.playRound(1, 1);
+play.playRound(1, 2);
 
 
 /* 
