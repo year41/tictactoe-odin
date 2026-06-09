@@ -49,7 +49,16 @@ function GameBoard() {
         console.log("Board", newBoard);
     };
 
-    return { printBoard, markBoard, winCheck, boardReset };
+    const drawCheck = () => {
+        const full = boardArr.filter((e) => e === "");
+        // console.log(full);
+
+        if (full.length === 0) return true;
+    };
+
+
+
+    return { printBoard, markBoard, winCheck, boardReset, drawCheck };
 };
 
 function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
@@ -84,6 +93,12 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
             console.log(`${activePlayer.name} is the winner.`)
             return gameRestart();
         };
+
+        if (board.drawCheck()) {
+            board.printBoard();
+            console.log("The game it's a draw.");
+            return gameRestart();
+        };
         
         switchPlayer();
         printNextRound();
@@ -100,5 +115,8 @@ play.playRound(6);
 play.playRound(3);
 play.playRound(7);
 play.playRound(4);
-// play.playRound(8);
-// play.playRound(5);
+play.playRound(5);
+play.playRound(8);
+play.playRound(1);
+play.playRound(2);
+play.playRound(0);
