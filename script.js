@@ -4,8 +4,16 @@ function GameBoard() {
     const boardArr = [];
 
     for (let i = 0; i < (row * column); i++) {
-        boardArr.push(i);
+        boardArr.push("");
     };
+    
+    const boardReset = () => {
+        boardArr.splice(0);
+        for (let i = 0; i < (row * column); i++) {
+            boardArr.push("");
+        };
+    };
+
 
     const winOptions = [
         [0, 1, 2],
@@ -41,7 +49,7 @@ function GameBoard() {
         console.log("Board", newBoard);
     };
 
-    return { printBoard, markBoard, winCheck };
+    return { printBoard, markBoard, winCheck, boardReset };
 };
 
 function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
@@ -60,6 +68,12 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
         console.log(`${getActivePlayer().name}'s turn.`);
     };
 
+    const gameRestart = () => {
+        board.boardReset();
+        console.log("New game starting.");
+        printNextRound();
+    }
+
     const playRound = (location) => {
         console.log(`${getActivePlayer().name} places ${getActivePlayer().mark} in cell number ${location}...`);
         
@@ -67,7 +81,8 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
         
         if (board.winCheck()) {
             board.printBoard();
-            return console.log(`${activePlayer.name} is the winner.`)
+            console.log(`${activePlayer.name} is the winner.`)
+            return gameRestart();
         };
         
         switchPlayer();
@@ -85,5 +100,5 @@ play.playRound(6);
 play.playRound(3);
 play.playRound(7);
 play.playRound(4);
-play.playRound(8);
-play.playRound(5);
+// play.playRound(8);
+// play.playRound(5);
