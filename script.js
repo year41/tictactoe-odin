@@ -1,17 +1,26 @@
 function GameBoard() {
     const row = 3;
     const column = 3;
-    const board = [];
+    const boardArr = [];
 
-    for (let i = 0; i < 3; i++) {
-        board[i] = [];
-        for (let j = 0; j < 3; j++) {
-            board[i].push(j);
-        };
-    };
+    let n = 1;
+    for (let i = 0; i < (row * column); i++) {
+        boardArr.push(n);
+        n++;
+    }
+
+    console.log("boardArr check ",  boardArr); // board arr check
+
+    // for (let i = 0; i < 3; i++) {
+    //     boardArr[i] = [];
+    //     for (let j = 0; j < 3; j++) {
+    //         boardArr[i].push(n);
+    //         n += 1;
+    //     };
+    // };
 
     const markBoard = (row, column, playerMark) => {
-        if (board[row][column] === "X" || board[row][column] === "O") {
+        if (boardArr[row][column] === "X" || boardArr[row][column] === "O") {
             return console.log("This cell is already filled, please choose a different cell...");
             // return ;
         };
@@ -21,13 +30,20 @@ function GameBoard() {
             // return false;
         };
 
-        board[row][column] = playerMark;
+        boardArr[row][column] = playerMark;
         // return true;
     }
 
     const printBoard = () => {
-        const boardWithValues = board.map((row) => row.map((col) => col));
-        console.log("Board", boardWithValues);
+
+        // const boardWithValues = board.map((row) => row.map((col) => col));
+        // console.log("Board", boardWithValues);
+
+        const newBoard = []
+        for (let i = 0; i < boardArr.length; i += 3) {
+            newBoard.push(boardArr.slice(i, i + 3));
+        }
+        console.log("Board", newBoard);
     };
 
     return { printBoard, markBoard };
