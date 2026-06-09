@@ -2,19 +2,6 @@ function GameBoard() {
     const row = 3;
     const column = 3;
     const boardArr = [];
-
-    for (let i = 0; i < (row * column); i++) {
-        boardArr.push("");
-    };
-    
-    const boardReset = () => {
-        boardArr.splice(0);
-        for (let i = 0; i < (row * column); i++) {
-            boardArr.push("");
-        };
-    };
-
-
     const winOptions = [
         [0, 1, 2],
         [3, 4, 5],
@@ -25,20 +12,12 @@ function GameBoard() {
         [0, 4, 8],
         [2, 4, 6],
     ];
-
-    const winCheck = () => {
-        for (let i = 0; i < winOptions.length; i++) {
-            const winArr = [];
-            winOptions[i].forEach((e) => winArr.push(boardArr[e]));
-
-            if (winArr.every((e) => e === "X") || winArr.every((e) => e === "O")) {
-                return true;
-            };
+    
+    const boardReset = () => {
+        boardArr.splice(0);
+        for (let i = 0; i < (row * column); i++) {
+            boardArr.push("");
         };
-    };
-
-    const markBoard = (location, playerMark) => {
-        boardArr[location] = playerMark;
     };
 
     const printBoard = () => {
@@ -48,22 +27,35 @@ function GameBoard() {
         }
         console.log("Board", newBoard);
     };
-
+    
+    const markBoard = (location, playerMark) => {
+        boardArr[location] = playerMark;
+    };
+    
+    const winCheck = () => {
+        for (let i = 0; i < winOptions.length; i++) {
+            const winArr = [];
+            winOptions[i].forEach((e) => winArr.push(boardArr[e]));
+            
+            if (winArr.every((e) => e === "X") || winArr.every((e) => e === "O")) {
+                return true;
+            };
+        };
+    };
+    
     const drawCheck = () => {
         const full = boardArr.filter((e) => e === "");
-        // console.log(full);
-
         if (full.length === 0) return true;
     };
 
-
-
+    boardReset();
+    
     return { printBoard, markBoard, winCheck, boardReset, drawCheck };
 };
 
 function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
     const board = GameBoard();
-
+    
     const players = [{ name: playerOne, mark: "X" }, { name: playerTwo, mark: "O" }];
 
     let activePlayer = players[0];
@@ -85,9 +77,9 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
 
     const playRound = (location) => {
         console.log(`${getActivePlayer().name} places ${getActivePlayer().mark} in cell number ${location}...`);
-        
+
         board.markBoard(location, getActivePlayer().mark)
-        
+
         if (board.winCheck()) {
             board.printBoard();
             console.log(`${activePlayer.name} is the winner.`)
@@ -99,7 +91,7 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
             console.log("The game it's a draw.");
             return gameRestart();
         };
-        
+
         switchPlayer();
         printNextRound();
     };
