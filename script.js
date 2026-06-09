@@ -3,10 +3,8 @@ function GameBoard() {
     const column = 3;
     const boardArr = [];
 
-    let n = 1;
     for (let i = 0; i < (row * column); i++) {
-        boardArr.push(n);
-        n++;
+        boardArr.push(i);
     };
 
     const winOptions = [
@@ -32,16 +30,7 @@ function GameBoard() {
     };
 
     const markBoard = (location, playerMark) => {
-        if (location > 9 || location < 1) {
-            return console.log("Cell out of bounds, please choose a cell withing the board...");
-        };
-
-        if (boardArr[location - 1] === "X" || boardArr[location - 1] === "O") {
-            console.log("This cell is already filled, please choose a different cell...");
-            return true;
-        };
-
-        boardArr[location - 1] = playerMark;
+        boardArr[location] = playerMark;
     };
 
     const printBoard = () => {
@@ -73,17 +62,16 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
 
     const playRound = (location) => {
         console.log(`${getActivePlayer().name} places ${getActivePlayer().mark} in cell number ${location}...`);
-
-        if (board.markBoard(location, getActivePlayer().mark)) {
-            printNextRound();
-        } else {
-            if (board.winCheck()) {
-                board.printBoard();
-                return console.log(`${activePlayer.name} is the winner. Congratulations!`)
-            };
-            switchPlayer();
-            printNextRound();
+        
+        board.markBoard(location, getActivePlayer().mark)
+        
+        if (board.winCheck()) {
+            board.printBoard();
+            return console.log(`${activePlayer.name} is the winner.`)
         };
+        
+        switchPlayer();
+        printNextRound();
     };
 
     printNextRound();
@@ -93,15 +81,9 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
 
 const play = GameController();
 
-play.playRound(1);
+play.playRound(6);
 play.playRound(3);
-play.playRound(9);
-play.playRound(5);
-play.playRound(2);
 play.playRound(7);
-
-
-/* 
-- object to control the flow
-- display controller
- */
+play.playRound(4);
+play.playRound(8);
+play.playRound(5);
