@@ -7,10 +7,34 @@ function GameBoard() {
     for (let i = 0; i < (row * column); i++) {
         boardArr.push(n);
         n++;
-    }
+    };
+
+    const winOptions = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6],
+    ];
+
+    const winCheck = () => {
+        for (let i = 0; i < winOptions.length; i++) {
+            const winArr = [];
+            winOptions[i].forEach((e) => winArr.push(boardArr[e]));
+
+            if (winArr.every((e) => e === "X") || winArr.every((e) => e === "O")) {
+                return true;
+            };
+        };
+    };
 
     const markBoard = (location, playerMark) => {
-        if (location > 9 || location < 1) return console.log("Cell out of bounds, please choose a cell withing the board.");
+        if (location > 9 || location < 1) {
+            return console.log("Cell out of bounds, please choose a cell withing the board...");
+        };
 
         if (boardArr[location - 1] === "X" || boardArr[location - 1] === "O") {
             console.log("This cell is already filled, please choose a different cell...");
@@ -18,17 +42,17 @@ function GameBoard() {
         };
 
         boardArr[location - 1] = playerMark;
-    }
+    };
 
     const printBoard = () => {
-        const newBoard = []
+        const newBoard = [];
         for (let i = 0; i < boardArr.length; i += 3) {
             newBoard.push(boardArr.slice(i, i + 3));
         }
         console.log("Board", newBoard);
     };
 
-    return { printBoard, markBoard };
+    return { printBoard, markBoard, winCheck };
 };
 
 function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
@@ -48,14 +72,18 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
     };
 
     const playRound = (location) => {
-        console.log(`${getActivePlayer().name} places ${getActivePlayer().mark} in location number ${location}.`);
+        console.log(`${getActivePlayer().name} places ${getActivePlayer().mark} in cell number ${location}...`);
 
         if (board.markBoard(location, getActivePlayer().mark)) {
             printNextRound();
         } else {
+            if (board.winCheck()) {
+                board.printBoard();
+                return console.log(`${activePlayer.name} is the winner. Congratulations!`)
+            };
             switchPlayer();
             printNextRound();
-        }
+        };
     };
 
     printNextRound();
@@ -65,11 +93,12 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
 
 const play = GameController();
 
-// play.playRound(1);
-// play.playRound(1);
-// play.playRound(1);
-// play.playRound(9);
-// play.playRound(10);
+play.playRound(1);
+play.playRound(3);
+play.playRound(9);
+play.playRound(5);
+play.playRound(2);
+play.playRound(7);
 
 
 /* 
