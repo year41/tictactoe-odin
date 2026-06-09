@@ -9,36 +9,23 @@ function GameBoard() {
         n++;
     }
 
-    console.log("boardArr check ",  boardArr); // board arr check
+    console.log("boardArr check ", boardArr); // board arr check
 
-    // for (let i = 0; i < 3; i++) {
-    //     boardArr[i] = [];
-    //     for (let j = 0; j < 3; j++) {
-    //         boardArr[i].push(n);
-    //         n += 1;
-    //     };
-    // };
+    const markBoard = (location, playerMark) => {
+        if (location > 9 || location < 1) return console.log("Cell out of bounds, please choose a cell withing the board.");
 
-    const markBoard = (row, column, playerMark) => {
-        if (boardArr[row][column] === "X" || boardArr[row][column] === "O") {
+        if (boardArr[location - 1] === "X" || boardArr[location - 1] === "O") {
             return console.log("This cell is already filled, please choose a different cell...");
-            // return ;
         };
 
         if (playerMark !== "X" && playerMark !== "O") {
             return console.log(`"${playerMark}" is not a valid marking. Please input the correct marking, "X" or "O"...`);
-            // return false;
         };
 
-        boardArr[row][column] = playerMark;
-        // return true;
+        boardArr[location - 1] = playerMark;
     }
 
     const printBoard = () => {
-
-        // const boardWithValues = board.map((row) => row.map((col) => col));
-        // console.log("Board", boardWithValues);
-
         const newBoard = []
         for (let i = 0; i < boardArr.length; i += 3) {
             newBoard.push(boardArr.slice(i, i + 3));
@@ -65,10 +52,11 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
         console.log(`${getActivePlayer().name}'s turn.`);
     };
 
-    const playRound = (row, column) => {
-        console.log(`${getActivePlayer().name} places ${getActivePlayer().mark} in row ${row}, column ${column} location. `);
+    const playRound = (location) => {
+        console.log(`${getActivePlayer().name} places ${getActivePlayer().mark} in location number ${location}.`);
 
-        board.markBoard(row, column, getActivePlayer().mark);
+
+        board.markBoard(location, getActivePlayer().mark);
         switchPlayer();
         printNextRound();
     };
@@ -80,9 +68,11 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
 
 const play = GameController();
 
-play.playRound(1, 0);
-play.playRound(1, 1);
-play.playRound(1, 2);
+// play.playRound(-1);
+// play.playRound(0);
+// play.playRound(1);
+// play.playRound(9);
+// play.playRound(10);
 
 
 /* 
