@@ -103,12 +103,12 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
 
 const play = GameController();
 
-play.playRound(6);
-play.playRound(3);
-play.playRound(7);
-play.playRound(4);
-play.playRound(5);
-play.playRound(8);
-play.playRound(1);
-play.playRound(2);
-play.playRound(0);
+// play.playRound(6);
+// play.playRound(3);
+// play.playRound(7);
+// play.playRound(4);
+// play.playRound(5);
+// play.playRound(8);
+// play.playRound(1);
+// play.playRound(2);
+// play.playRound(0);
