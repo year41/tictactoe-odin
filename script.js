@@ -74,6 +74,7 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
     const gameRestart = () => {
         board.boardReset();
         console.log("New game starting.");
+        switchPlayer();
         printNextRound();
     };
 
@@ -106,7 +107,7 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
 
     printNextRound();
 
-    return { playRound, getActivePlayer, getBoard, getWinner, getDraw };
+    return { playRound, getActivePlayer, getBoard, getWinner, getDraw, gameRestart };
 }
 
 function ScreenController() {
@@ -114,6 +115,7 @@ function ScreenController() {
 
     const boardContainer = document.querySelector(".board");
     const displayComments = document.querySelector(".comments");
+    const resetGame = document.querySelector(".reset");
 
     const updateScreen = () => {
         boardContainer.textContent = "";
@@ -158,6 +160,11 @@ function ScreenController() {
     };
 
     boardContainer.addEventListener("click", clickHandler);
+
+    resetGame.addEventListener("click", (e) => {
+        game.gameRestart();
+        updateScreen();
+    })
 
     updateScreen();
 }

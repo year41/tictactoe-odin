@@ -48,5 +48,13 @@
     color: cornsilk;
     background-color: #f4fcfc;
     border: none;
-    border-radius: 2%;
+    border-radius: 3px;
+}
+
+.reset {
+    padding: 8px 28px;
+    font-size: 20px;
+    background-color: gray;
+    border-radius: 8px;
+    cursor: pointer;
 }
