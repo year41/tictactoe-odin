@@ -12,7 +12,7 @@ function GameBoard() {
         [0, 4, 8],
         [2, 4, 6],
     ];
-    
+
     const boardReset = () => {
         boardArr.splice(0);
         for (let i = 0; i < (row * column); i++) {
@@ -27,35 +27,37 @@ function GameBoard() {
         }
         console.log("Board", newBoard);
     };
-    
+
     const markBoard = (location, playerMark) => {
         boardArr[location] = playerMark;
     };
-    
+
     const winCheck = () => {
         for (let i = 0; i < winOptions.length; i++) {
             const winArr = [];
             winOptions[i].forEach((e) => winArr.push(boardArr[e]));
-            
+
             if (winArr.every((e) => e === "X") || winArr.every((e) => e === "O")) {
                 return true;
             };
         };
     };
-    
+
     const drawCheck = () => {
         const full = boardArr.filter((e) => e === "");
         if (full.length === 0) return true;
     };
 
+    const getBoard = () => boardArr;
+
     boardReset();
-    
-    return { printBoard, markBoard, winCheck, boardReset, drawCheck };
+
+    return { printBoard, markBoard, winCheck, boardReset, drawCheck, getBoard };
 };
 
 function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
     const board = GameBoard();
-    
+
     const players = [{ name: playerOne, mark: "X" }, { name: playerTwo, mark: "O" }];
 
     let activePlayer = players[0];
@@ -96,19 +98,34 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
         printNextRound();
     };
 
+    const getBoard = () => board.getBoard();
+
     printNextRound();
 
-    return { playRound };
+    return { playRound, getActivePlayer, getBoard };
 }
 
-const play = GameController();
+function ScreenController() {
+    const game = GameController();
 
-// play.playRound(6);
-// play.playRound(3);
-// play.playRound(7);
-// play.playRound(4);
-// play.playRound(5);
-// play.playRound(8);
-// play.playRound(1);
-// play.playRound(2);
-// play.playRound(0);
+    const boardContainer = document.querySelector(".board");
+    const displayComments = document.querySelector(".comments");
+
+    const updateScreen = () => {
+        const board = game.getBoard();
+        const activePlayer = game.getActivePlayer();
+
+        displayComments.textContent = `${activePlayer.name}'s turn...`;
+
+        board.forEach((e, index) => {
+            const cellBtn = document.createElement("button");
+            cellBtn.classList.toggle("btn");
+            cellBtn.dataset.id = index;
+            cellBtn.textContent = index; //temp data
+            boardContainer.appendChild(cellBtn);
+        });
+    };
+    updateScreen();
+}
+
+ScreenController();
