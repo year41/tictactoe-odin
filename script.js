@@ -75,23 +75,27 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
         board.boardReset();
         console.log("New game starting.");
         printNextRound();
-    }
+    };
+
+    const getWinner = () => board.winCheck();
+
+    const getDraw = () => board.drawCheck();
 
     const playRound = (location) => {
+        if (getWinner()) return;
+
         console.log(`${getActivePlayer().name} places ${getActivePlayer().mark} in cell number ${location}...`);
 
         board.markBoard(location, getActivePlayer().mark)
 
-        if (board.winCheck()) {
+        if (getWinner()) {
             board.printBoard();
-            console.log(`${activePlayer.name} is the winner.`)
-            return gameRestart();
+            return console.log(`${activePlayer.name} is the Winner.`);
         };
 
-        if (board.drawCheck()) {
+        if (getDraw()) {
             board.printBoard();
-            console.log("The game it's a draw.");
-            return gameRestart();
+            return console.log("The game it's a draw. Start a new Game?");
         };
 
         switchPlayer();
@@ -102,7 +106,7 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
 
     printNextRound();
 
-    return { playRound, getActivePlayer, getBoard };
+    return { playRound, getActivePlayer, getBoard, getWinner, getDraw };
 }
 
 function ScreenController() {
@@ -116,31 +120,45 @@ function ScreenController() {
 
         const board = game.getBoard();
         const activePlayer = game.getActivePlayer();
-
-        console.log("update board", board);
+        const gameWinner = game.getWinner();
+        const gameDraw = game.getDraw();
+        const boardUpdate = () => {
+            board.forEach((e, index) => {
+                const cellBtn = document.createElement("button");
+                cellBtn.classList.toggle("btn");
+                cellBtn.dataset.id = index;
+                cellBtn.textContent = board[index];
+                boardContainer.appendChild(cellBtn);
+            });
+        };
 
         displayComments.textContent = `${activePlayer.name}'s turn...`;
 
-        board.forEach((e, index) => {
-            const cellBtn = document.createElement("button");
-            cellBtn.classList.toggle("btn");
-            cellBtn.dataset.id = index;
-            cellBtn.textContent = board[index]; //temp data
-            boardContainer.appendChild(cellBtn);
-        });
+        if (gameWinner) {
+            displayComments.textContent = `${activePlayer.name} is the winner. Congratulations!`;
+        };
+
+        if (gameDraw) {
+            displayComments.textContent = "The game it's a draw. Start a new Game?";
+        };
+
+        boardUpdate();
+
     };
 
     function clickHandler(e) {
         const selectedLocation = e.target.dataset.id;
+        const locationValue = e.target.textContent;
 
         if (!selectedLocation) return;
+        if (locationValue !== "") return;
 
         game.playRound(selectedLocation);
         updateScreen();
     };
 
-
     boardContainer.addEventListener("click", clickHandler);
+
     updateScreen();
 }
 
