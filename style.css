@@ -1,0 +1,52 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: center;
+    background-color: azure;
+    color: #fff;
+    text-shadow: 0 2px 10px #000;
+}
+
+.title {
+    margin: 20px auto;
+}
+
+.players {
+    margin: 40px auto;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+
+.comments {
+    margin: 40px;
+    font-size: 20px;
+    color: #909090;
+    font-weight: 600;
+    text-shadow: none;
+}
+
+.board {
+    margin: 40px auto;
+    height: calc(67px * 3 + 10px);
+    width: calc(67px * 3 + 10px);
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    grid-template-columns: 70px 70px 70px;
+    grid-template-rows: 70px 70px 70px;
+    gap: 5px;
+
+    background-color: gray;
+    box-shadow: 0 0 8px 0 #000;
+}
+
+.btn {
+    font-size: 42px;
+    font-weight: 600;
+    color: cornsilk;
+    background-color: #f4fcfc;
+    border: none;
+    border-radius: 2%;
+}
