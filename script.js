@@ -112,8 +112,12 @@ function ScreenController() {
     const displayComments = document.querySelector(".comments");
 
     const updateScreen = () => {
+        boardContainer.textContent = "";
+
         const board = game.getBoard();
         const activePlayer = game.getActivePlayer();
+
+        console.log("update board", board);
 
         displayComments.textContent = `${activePlayer.name}'s turn...`;
 
@@ -121,10 +125,22 @@ function ScreenController() {
             const cellBtn = document.createElement("button");
             cellBtn.classList.toggle("btn");
             cellBtn.dataset.id = index;
-            cellBtn.textContent = index; //temp data
+            cellBtn.textContent = board[index]; //temp data
             boardContainer.appendChild(cellBtn);
         });
     };
+
+    function clickHandler(e) {
+        const selectedLocation = e.target.dataset.id;
+
+        if (!selectedLocation) return;
+
+        game.playRound(selectedLocation);
+        updateScreen();
+    };
+
+
+    boardContainer.addEventListener("click", clickHandler);
     updateScreen();
 }
 
