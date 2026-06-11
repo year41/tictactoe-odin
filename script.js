@@ -118,8 +118,11 @@ function ScreenController() {
     const boardContainer = document.querySelector(".board");
     const displayComments = document.querySelector(".comments");
     const resetGame = document.querySelector("#reset");
-    const changeName = document.querySelector(".change-name");
-
+    const nameDialog = document.querySelector("#names-dialog");
+    const dialogBtn = document.getElementById("close-dialog");
+    const player1Dialog = document.getElementById("player1");
+    const player2Dialog = document.getElementById("player2");
+    
     const updateScreen = () => {
         boardContainer.textContent = "";
 
@@ -162,14 +165,25 @@ function ScreenController() {
         updateScreen();
     };
 
-    function updateName(e) {
+    function updateName() {
         const players = game.getPlayers();
-        const player1 = players[0];
-        const player2 = players[1];
+        const changeName = (player, index) => {
+            if (player.value !== "") {
+                return players[index].name = player.value;
+            };
+            player.value = players[index].name;
+        };
 
-        console.log(players);
-        console.log("clicked");
+        const newPlayer1 = changeName(player1Dialog, 0);
+        const newPlayer2 = changeName(player2Dialog, 1);
+
+        updateScreen();
+        nameDialog.close();
     }
+
+    function textFocus() {
+        this.select();
+    };
 
     boardContainer.addEventListener("click", boardClickHandler);
 
@@ -177,8 +191,13 @@ function ScreenController() {
         game.gameRestart();
         updateScreen();
     });
+
+    player1Dialog.addEventListener("click", textFocus);
+
+    player2Dialog.addEventListener("click", textFocus);
+
     
-    // changeName.addEventListener("click", updateName);
+    dialogBtn.addEventListener("click", updateName);
 
     updateScreen();
 }
