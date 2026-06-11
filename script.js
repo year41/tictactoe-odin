@@ -166,9 +166,11 @@ function ScreenController() {
     };
 
     function updateName() {
+        const playersDiv = document.querySelectorAll(".player1, .player2");
         const players = game.getPlayers();
         const changeName = (player, index) => {
             if (player.value !== "") {
+                playersDiv[index].textContent = player.value;
                 return players[index].name = player.value;
             };
             player.value = players[index].name;
@@ -195,7 +197,6 @@ function ScreenController() {
     player1Dialog.addEventListener("click", textFocus);
 
     player2Dialog.addEventListener("click", textFocus);
-
     
     dialogBtn.addEventListener("click", updateName);
 
