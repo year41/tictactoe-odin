@@ -122,7 +122,7 @@ function ScreenController() {
     const dialogBtn = document.getElementById("close-dialog");
     const player1Dialog = document.getElementById("player1");
     const player2Dialog = document.getElementById("player2");
-    
+
     const updateScreen = () => {
         boardContainer.textContent = "";
 
@@ -140,7 +140,12 @@ function ScreenController() {
             });
         };
 
-        displayComments.textContent = `${activePlayer.name}'s turn...`;
+        displayComments.textContent = `${activePlayer.name}'s turn `;
+        const commentsBtn = document.createElement("span");
+        commentsBtn.classList.toggle("player-mark")
+        commentsBtn.textContent = `- ${activePlayer.mark} -`;
+        displayComments.appendChild(commentsBtn);
+
 
         if (gameWinner) {
             displayComments.textContent = `${activePlayer.name} is the winner. Congratulations!`;
@@ -197,7 +202,7 @@ function ScreenController() {
     player1Dialog.addEventListener("click", textFocus);
 
     player2Dialog.addEventListener("click", textFocus);
-    
+
     dialogBtn.addEventListener("click", updateName);
 
     updateScreen();

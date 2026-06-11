@@ -31,6 +31,13 @@
     text-shadow: none;
 }
 
+.player-mark {
+    font-size: 26px;
+    font-weight: 600;
+    color: #909090;
+    text-shadow: none;
+}
+
 .board {
     margin: 40px auto;
     height: calc(67px * 3 + 10px);
