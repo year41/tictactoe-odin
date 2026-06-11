@@ -62,6 +62,8 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
 
     let activePlayer = players[0];
 
+    const getPlayers = () => players;
+
     const switchPlayer = () => activePlayer = activePlayer === players[0] ? players[1] : players[0];
 
     const getActivePlayer = () => activePlayer;
@@ -107,7 +109,7 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
 
     printNextRound();
 
-    return { playRound, getActivePlayer, getBoard, getWinner, getDraw, gameRestart };
+    return { playRound, getActivePlayer, getBoard, getWinner, getDraw, gameRestart, getPlayers };
 }
 
 function ScreenController() {
@@ -115,7 +117,8 @@ function ScreenController() {
 
     const boardContainer = document.querySelector(".board");
     const displayComments = document.querySelector(".comments");
-    const resetGame = document.querySelector(".reset");
+    const resetGame = document.querySelector("#reset");
+    const changeName = document.querySelector(".change-name");
 
     const updateScreen = () => {
         boardContainer.textContent = "";
@@ -148,7 +151,7 @@ function ScreenController() {
 
     };
 
-    function clickHandler(e) {
+    function boardClickHandler(e) {
         const selectedLocation = e.target.dataset.id;
         const locationValue = e.target.textContent;
 
@@ -159,12 +162,23 @@ function ScreenController() {
         updateScreen();
     };
 
-    boardContainer.addEventListener("click", clickHandler);
+    function updateName(e) {
+        const players = game.getPlayers();
+        const player1 = players[0];
+        const player2 = players[1];
+
+        console.log(players);
+        console.log("clicked");
+    }
+
+    boardContainer.addEventListener("click", boardClickHandler);
 
     resetGame.addEventListener("click", (e) => {
         game.gameRestart();
         updateScreen();
-    })
+    });
+    
+    // changeName.addEventListener("click", updateName);
 
     updateScreen();
 }

@@ -3,9 +3,13 @@
     padding: 0;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     text-align: center;
-    background-color: azure;
     color: #fff;
     text-shadow: 0 2px 10px #000;
+}
+
+.container {
+    background-color: azure;
+
 }
 
 .title {
@@ -52,9 +56,48 @@
 }
 
 .reset {
+    margin-bottom: 30px;
     padding: 8px 28px;
     font-size: 20px;
     background-color: gray;
     border-radius: 8px;
     cursor: pointer;
+}
+
+.change-name {
+    font-size: 16px;
+}
+
+dialog {
+    width: 300px;
+    margin: auto;
+    background-color: rgba(255, 255, 255, 0.95);
+    border: none;
+    border-radius: 5px;
+}
+
+.dialog-title {
+    margin: 25px;
+}
+
+.row {
+    margin: 25px;
+}
+
+.row label {
+    font-weight: 600;
+    color: #909090;
+    text-shadow: none;
+}
+.row input {
+    width: 100px;
+    margin-left: 15px;
+    padding: 3px 10px;
+    text-align: left;
+    font-weight: 500;
+    text-shadow: none;
+    color: #000;
+    border-radius: 6px;
+    border: none;
+    box-shadow: 1px 1px 4px 0 #000000;
 }
