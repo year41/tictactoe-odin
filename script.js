@@ -123,10 +123,12 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
 
 function ScreenController() {
     const game = GameController();
+    const players = game.getPlayers();
 
     const boardContainer = document.querySelector(".board");
     const displayComments = document.querySelector(".comments");
-    const resetGame = document.querySelector("#reset");
+    const newGame = document.querySelector("#new-game");
+    const resetGame = document.querySelector("#reset-game");
 
     const player1Counter = document.getElementById("player1-counter")
     const drawCounter = document.getElementById("draw-counter")
@@ -141,7 +143,6 @@ function ScreenController() {
         boardContainer.textContent = "";
 
         const board = game.getBoard();
-        const players = game.getPlayers();
         const draws = game.getDrawCounter();
         const activePlayer = game.getActivePlayer();
         const gameWinner = game.getWinner();
@@ -192,7 +193,6 @@ function ScreenController() {
 
     function updateName() {
         const playersDiv = document.querySelectorAll(".player1, .player2");
-        const players = game.getPlayers();
         const changeName = (player, index) => {
             if (player.value !== "") {
                 playersDiv[index].textContent = player.value;
@@ -214,9 +214,13 @@ function ScreenController() {
 
     boardContainer.addEventListener("click", boardClickHandler);
 
-    resetGame.addEventListener("click", (e) => {
+    newGame.addEventListener("click", (e) => {
         game.gameRestart();
         updateScreen();
+    });
+
+    resetGame.addEventListener("click", () => {
+        window.location.reload();
     });
 
     player1Dialog.addEventListener("click", textFocus);
