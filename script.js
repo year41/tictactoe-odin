@@ -164,12 +164,12 @@ function ScreenController() {
         commentsBtn.textContent = `- ${activePlayer.mark} -`;
         displayComments.appendChild(commentsBtn);
 
-        if (gameWinner) {
-            displayComments.textContent = `${activePlayer.name} is the winner. Congratulations!`;
-        };
-
         if (gameDraw) {
             displayComments.textContent = "The game it's a draw. Start a new Game?";
+        };
+
+        if (gameWinner) {
+            displayComments.textContent = `${activePlayer.name} is the winner. Congratulations!`;
         };
 
         player1Counter.textContent = `${players[0].name}: ${players[0].counter}`;
