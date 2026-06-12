@@ -53,6 +53,20 @@
     box-shadow: 0 0 8px 0 #000;
 }
 
+.counter-container {
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.counter {
+    font-size: 20px;
+    color: #909090;
+    font-weight: 600;
+    text-shadow: none;
+}
+
 .btn {
     font-size: 42px;
     font-weight: 600;
@@ -96,6 +110,7 @@ dialog {
     color: #909090;
     text-shadow: none;
 }
+
 .row input {
     width: 100px;
     margin-left: 15px;

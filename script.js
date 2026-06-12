@@ -58,9 +58,16 @@ function GameBoard() {
 function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
     const board = GameBoard();
 
-    const players = [{ name: playerOne, mark: "X" }, { name: playerTwo, mark: "O" }];
+    const players = [
+        { name: playerOne, mark: "X", counter: 0 },
+        { name: playerTwo, mark: "O", counter: 0 },
+    ];
+
+    const draw = { counter: 0 };
 
     let activePlayer = players[0];
+
+    const getDrawCounter = () => draw;
 
     const getPlayers = () => players;
 
@@ -93,11 +100,13 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
 
         if (getWinner()) {
             board.printBoard();
-            return console.log(`${activePlayer.name} is the Winner.`);
+            getActivePlayer().counter++;
+            return console.log(`${getActivePlayer().name} is the Winner.`);
         };
 
         if (getDraw()) {
             board.printBoard();
+            getDrawCounter().counter++;
             return console.log("The game it's a draw. Start a new Game?");
         };
 
@@ -109,7 +118,7 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
 
     printNextRound();
 
-    return { playRound, getActivePlayer, getBoard, getWinner, getDraw, gameRestart, getPlayers };
+    return { playRound, getActivePlayer, getBoard, getWinner, getDraw, gameRestart, getPlayers, getDrawCounter };
 }
 
 function ScreenController() {
@@ -118,6 +127,11 @@ function ScreenController() {
     const boardContainer = document.querySelector(".board");
     const displayComments = document.querySelector(".comments");
     const resetGame = document.querySelector("#reset");
+
+    const player1Counter = document.getElementById("player1-counter")
+    const drawCounter = document.getElementById("draw-counter")
+    const player2Counter = document.getElementById("player2-counter")
+
     const nameDialog = document.querySelector("#names-dialog");
     const dialogBtn = document.getElementById("close-dialog");
     const player1Dialog = document.getElementById("player1");
@@ -127,6 +141,8 @@ function ScreenController() {
         boardContainer.textContent = "";
 
         const board = game.getBoard();
+        const players = game.getPlayers();
+        const draws = game.getDrawCounter();
         const activePlayer = game.getActivePlayer();
         const gameWinner = game.getWinner();
         const gameDraw = game.getDraw();
@@ -141,11 +157,11 @@ function ScreenController() {
         };
 
         displayComments.textContent = `${activePlayer.name}'s turn `;
+
         const commentsBtn = document.createElement("span");
         commentsBtn.classList.toggle("player-mark")
         commentsBtn.textContent = `- ${activePlayer.mark} -`;
         displayComments.appendChild(commentsBtn);
-
 
         if (gameWinner) {
             displayComments.textContent = `${activePlayer.name} is the winner. Congratulations!`;
@@ -154,6 +170,10 @@ function ScreenController() {
         if (gameDraw) {
             displayComments.textContent = "The game it's a draw. Start a new Game?";
         };
+
+        player1Counter.textContent = `${players[0].name}: ${players[0].counter}`;
+        player2Counter.textContent = `${players[1].name}: ${players[1].counter}`;
+        drawCounter.textContent = `Draw: ${draws.counter}`;
 
         boardUpdate();
 
